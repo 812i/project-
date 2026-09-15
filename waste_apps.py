@@ -9,24 +9,14 @@ st.set_page_config(
     layout="centered"
 )
 
-# --- وظيفة مساعدة لتحميل الصور المحلية وتحويلها إلى Base64 لعرضها في التطبيق ---
-def get_img_as_base64(file_path):
-    if not Path(file_path).exists():
-        return None
-    with open(file_path, "rb") as f:
-        data = f.read()
-        return base64.b64encode(data).decode()
-
 # --- تعريف مسارات الصور الجاهزة ---
-# ملاحظة: يجب أن تكون الصور موجودة في نفس مجلد ملف الكود (أو في مجلد images/ وتعديل المسار)
-# لتجربة فورية، تم استخدام روابط صور خارجية عامة كمثال (ويمكن استبدالها بصورك الخاصة لاحقاً)
 art_images = {
-    "قارورة بلاستيكية مهملة": "https://i.ibb.co/qN96L5Y/art-plastic-bottles.jpg", # مثال فني لزجاجات بلاستيكية
-    "علبة مشروبات غازية فارغة": "https://i.ibb.co/7gL2JvT/art-aluminum-cans.jpg", # مثال فني لعلب ألمنيوم
-    "إطار سيارة قديم": "https://i.ibb.co/j6w8T5X/art-tires-planter.jpg",   # مثال فني لإطارات معاد تدويرها
-    "مجموعة أكياس بلاستيكية": "https://i.ibb.co/x1N3q0Y/art-plastic-bags-dress.jpg", # مثال فني لفساتين من الأكياس
-    "أجهزة إلكترونية تالفة": "https://i.ibb.co/hZ41Q1D/art-circuit-board-sculpture.jpg", # مثال فني من لوحات إلكترونية
-    "بقايا طعام مهدرة": "https://i.ibb.co/bWHx2Fp/art-food-waste-compost.jpg" # مثال فني بيئي للطعام والسماد
+    "قارورة بلاستيكية مهملة": "https://i.ibb.co/qN96L5Y/art-plastic-bottles.jpg",
+    "علبة مشروبات غازية فارغة": "https://i.ibb.co/7gL2JvT/art-aluminum-cans.jpg",
+    "إطار سيارة قديم": "https://i.ibb.co/j6w8T5X/art-tires-planter.jpg",
+    "مجموعة أكياس بلاستيكية": "https://i.ibb.co/x1N3q0Y/art-plastic-bags-dress.jpg",
+    "أجهزة إلكترونية تالفة": "https://i.ibb.co/hZ41Q1D/art-circuit-board-sculpture.jpg",
+    "بقايا طعام مهدرة": "https://i.ibb.co/bWHx2Fp/art-food-waste-compost.jpg"
 }
 
 # عنوان التطبيق والبانر
@@ -49,8 +39,8 @@ if st.button("✨ اعرض التحفة الفنية!", type="primary"):
             
             # عرض النتيجة بشكل مبهر
             st.success("✅ تم إنجاز العمل الفني!")
-            # عرض الصورة باستخدام الرابط المباشر (أسرع وأضمن)
-            st.image(image_url, caption=f"التحفة الفنية المستوحاة من: {waste_item}", use_column_width=True)
+            # استخدام الوسيط الصحيح والحديث لعرض الصورة
+            st.image(image_url, caption=f"التحفة الفنية المستوحاة من: {waste_item}", use_container_width=True)
             st.balloons()
             
             st.markdown("---")
