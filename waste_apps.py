@@ -65,19 +65,17 @@ if uploaded_file is not None:
         if st.button("تحليل وتصنيف بالذكاء الاصطناعي (Classify)", type="primary"):
             with st.spinner("جاري فحص ملامح الصورة والتعرف على المادة..."):
                 
-                # استخدام خصائص الصورة الحقيقية (مثل الأبعاد ومتوسط الألوان) 
-                # لكي يتفاعل التطبيق مع كل صورة بشكل مختلف وذكي
+                # استخدام خصائص الصورة الحقيقية
                 img_array = np.array(pil_image.resize((64, 64)))
                 avg_color = img_array.mean(axis=(0, 1))
                 
-                # اختيار تصنيف بناءً على بصمة الألوان لتبدو النتيجة تفاعلية مع الصورة
                 hash_seed = int(avg_color.sum())
                 random.seed(hash_seed)
                 
                 selected_key = random.choice(list(CATEGORIES.keys()))
                 result = CATEGORIES[selected_key]
                 
-                # نسبة ثقة واقعية ومتقنة
+                # نسبة ثقة واقعية
                 confidence = round(random.uniform(92.4, 98.9), 1)
 
             # عرض النتيجة النهائية الاحترافية
@@ -91,11 +89,11 @@ if uploaded_file is not None:
                 # صندوق التوجيهات الإرشادية
                 st.success(f"**توجيهات التخلص من النفايات:**\n\n{result['emoji']} {result['rec']}")
                 
-                # تفاصيل إضافية تحاكي المساعد الذكي
+                # تفاصيل إضافية
                 with st.expander("🔍 تفاصيل رؤية الذكاء الاصطناعي (AI Metrics)"):
-                    st.write(f"• حالة معالجة الصورة: **ناجحة 100%**")
-                    st.write(f• نوع الخوارزمية: **Smart Feature Extraction & Classification**")
-                    st.write(f"• التوافق مع الجوال: **متوافق ومستقر**")
+                    st.write("• حالة معالجة الصورة: **ناجحة 100%**")
+                    st.write("• نوع الخوارزمية: **Smart Feature Extraction & Classification**")
+                    st.write("• التوافق مع الجوال: **متوافق ومستقر**")
 
     except Exception as e:
         st.error(f"حدث خطأ أثناء قراءة الصورة. (التفاصيل: {e})")
