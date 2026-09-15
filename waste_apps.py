@@ -26,7 +26,7 @@ st.write(
 
 st.markdown("---")
 
-# رفع الصورة من الجوال (دعم JPG, JPEG, PNG)
+# رفع الصورة من الجوال
 uploaded_file = st.file_uploader(
     "اختر صورة لقطعة النفايات من جوالك...", 
     type=["jpg", "jpeg", "png"]
@@ -42,7 +42,8 @@ if uploaded_file is not None:
             pil_image = pil_image.convert('RGB')
         
         st.subheader("الصورة المرفوعة")
-        st.image(pil_image, caption="قطعة النفايات الخاصة بك", use_column_width=True)
+        # تم تصحيح الخاصية هنا لتتوافق مع إصدارات Streamlit الحديثة
+        st.image(pil_image, caption="قطعة النفايات الخاصة بك", use_container_width=True)
         
         # زر التنبؤ والتصنيف
         if st.button("تصنيف النفايات (Classify)", type="primary"):
