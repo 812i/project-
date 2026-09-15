@@ -7,14 +7,16 @@ st.set_page_config(
     layout="centered"
 )
 
-# تخزين النقاط في الجلسة
+# تهيئة المتغيرات في الجلسة لتثبيت النتائج والنقاط
 if 'score' not in st.session_state:
     st.session_state.score = 0
+if 'show_result' not in st.session_state:
+    st.session_state.show_result = False
 
 st.title("🌍 Eco-Hero: تحدي الفرز الذكي")
 st.write(
     "لعبتك البيئية الممتعة لتصنيف النفايات، كسب النقاط الخضراء، "
-    "ومعرفة أثرها الحقيقي على البيئة بكل سهولة من جوالك!"
+    "ومعرفة مكان رميها الصحيح بكل سهولة من جوالك!"
 )
 
 st.markdown("---")
@@ -29,7 +31,7 @@ with col2:
 st.markdown("---")
 st.subheader("🗑️ اختر نوع النفايات لمعرفة طريقة التخلص الصحيحة:")
 
-# خيارات النفايات مع صور حقيقية وتوضيحية
+# خيارات النفايات مع صورها الصحيحة تماماً ودقيقة 100%
 waste_options = {
     "قشرة تفاح / طعام (Organic)": {
         "type": "Organic Waste",
@@ -68,24 +70,27 @@ waste_options = {
 selected_item = st.selectbox("اختر القطعة الموجودة أمامك:", options=list(waste_options.keys()))
 item_info = waste_options[selected_item]
 
-# عرض الصورة التوضيحية للعنصر المختار
+# عرض الصورة التوضيحية الصحيحة للعنصر المختار
 st.image(item_info['image'], caption=f"صورة توضيحية لـ: {selected_item}", use_container_width=True)
 
 st.markdown("---")
 
+# زر التحقق
 if st.button("تحقق من مكان الرمي واربح النقاط!", type="primary"):
-    # إضافة النقاط
     st.session_state.score += item_info['points']
-    
-    # عرض النتيجة بشكل مرتب وجميل
-    st.success("### النتيجة صحيحة 100%!")
+    st.session_state.show_result = True
+
+# عرض النتيجة وتوجيهات الرمي بوضوح تام ودائم
+if st.session_state.show_result:
+    st.success("### ✅ النتيجة صحيحة 100%!")
     st.markdown(f"**{item_info['emoji']} التصنيف:** {item_info['type']}")
     st.markdown(f"📍 **مكان التخلص الصحيح:** `{item_info['bin']}`")
     st.info(f"💡 **معلومة بيئية ذكية:** {item_info['tip']}")
-    st.balloons() # تأثير احتفالي ممتع على الجوال!
 
+st.markdown("---")
 if st.button("🔄 إعادة ضبط النقاط"):
     st.session_state.score = 0
+    st.session_state.show_result = False
     st.rerun()
 
 # ذيل الصفحة
