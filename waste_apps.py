@@ -1,59 +1,81 @@
 import streamlit as st
 
-# 1. إعدادات الصفحة لتناسب الجوال بشكل تلقائي
-st.set_page_config(
-    page_title="تحدي الـ 7 أيام البيئي",
-    page_icon="🌱",
-    layout="centered" # يضمن بقاء المحتوى في المنتصف ومناسباً للشاشات الصغيرة
-)
+# إعدادات الصفحة
+st.set_page_config(page_title="تحدي النظافة البيئية", page_icon="🌱", layout="centered")
 
-# تصميم مخصص لتحسين الخطوط والأزرار على الجوال
+# تنسيق CSS بسيط لتحسين المظهر العام
 st.markdown("""
     <style>
-    .big-title { font-size: 1.8rem !important; font-weight: bold; text-align: center; color: #2E7D32; }
-    .subtitle { font-size: 1.1rem; text-align: center; color: #555; margin-bottom: 20px; }
-    div[data-testid="stCheckbox"] { padding: 8px; background-color: #f9f9f9; border-radius: 8px; margin-bottom: 8px; }
+    .main {
+        background-color: #0e1117;
+    }
+    .stButton>button {
+        width: 100%;
+        background-color: #2e7d32;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+    }
+    .badge-card {
+        background: linear-gradient(135deg, #1b5e20, #4caf50);
+        padding: 25px;
+        border-radius: 15px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        margin-top: 20px;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-# العنوان الرئيسي
-st.markdown('<p class="big-title">🌱 تحدي الـ 7 أيام البيئي</p>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">بمناسبة اليوم العالمي للنظافة - أنجز المهام يومياً لجعل كوكبنا أفضل!</p>', unsafe_allow_html=True)
+st.title("🌱 تحدي اليوم العالمي للنظافة البيئية")
+st.write("أتمم مهامك البيئية اليومية، وساهم في حماية كوكبنا للحصول على شارة التميز الخاصة بك!")
 
-# 2. قائمة المهام اليومية
+# قائمة المهام البيئية
 tasks = [
-    "📅 اليوم 1: استبدل الأكياس البلاستيكية بأكياس قماشية مستدامة.",
-    "📅 اليوم 2: تجنب شراء أي قوارير ماء بلاستيكية واستخدم مطرتك الخاصة.",
-    "📅 اليوم 3: افصل النفايات في منزلك (بلاستيك، ورق، بقايا طعام).",
-    "📅 اليوم 4: قلل هدر الطعام (تناول وجبة كاملة دون مخلفات).",
-    "📅 اليوم 5: اجمع 5 قطع من النفايات البلاستيكية من محيطك أو الشارع ووفرها للحاويات المخصصة.",
-    "📅 اليوم 6: أغلق الأجهزة غير المستخدمة ووفر الطاقة.",
-    "📅 اليوم 7: انشر الوعي! شارك لقطة شاشة لإنجازك مع صديق ليدخل التحدي."
+    "استخدام علبة ماء أو كوب قهوة قابل لإعادة الاستخدام 🥤",
+    "جمع زجاجات بلاستيكية ووضعها في مخصص إعادة التدوير ♻️",
+    "التقاط 3 مخلفات وإلقاؤها في حاوية القمامة أثناء المشي 🗑️",
+    "إغلاق صنبور الماء أثناء تنظيف الأسنان لترشيد الاستهلاك 💧",
+    "إطفاء الأضواء والأجهزة غير المستخدمة لتوفير الطاقة 💡"
 ]
 
-# 3. تتبع حالة المهام
-completed_tasks = 0
-
+st.markdown("---")
 st.subheader("📋 مهامك اليومية:")
-for task in tasks:
-    # الحالات المحددة يتم حفظها تفاعلياً
-    if st.checkbox(task):
-        completed_tasks += 1
 
-# 4. حساب النسبة المئوية للإنجاز
+# تتبع حالة المهام
+completed_tasks = []
+for i, task in enumerate(tasks):
+    is_checked = st.checkbox(task, key=f"task_{i}")
+    if is_checked:
+        completed_tasks.append(task)
+
+# حساب نسبة الإنجاز
 total_tasks = len(tasks)
-progress_percentage = completed_tasks / total_tasks
+progress = len(completed_tasks) / total_tasks
+percentage = int(progress * 100)
 
-# 5. عرض شريط التقدم (Progress Bar)
-st.write("---")
-st.write(f"📊 **نسبة إنجاز التحدي:** {int(progress_percentage * 100)}%")
-st.progress(progress_percentage)
+st.markdown("---")
+st.write(f"📊 **نسبة إنجاز التحدي:** {percentage}%")
+st.progress(progress)
 
-# 6. مكافأة النجاح عند إتمام التحدي بالكامل
-if completed_tasks == total_tasks:
-    st.balloons() # تأثير بالونات احتفالية يظهر بشكل رائع على الجوال
-    st.success("🎉 كفو! لقد أتممت تحدي الـ 7 أيام بنجاح وساهمت في حماية بيئتك!")
-elif completed_tasks > 0:
-    st.info(f"💪 ممتاز! لقد أنجزت {completed_tasks} من أصل {total_tasks} مهام. استمر!")
+# إدخال الاسم والحصول على الشارة عند اكتمال المهام (100%)
+if percentage == 100:
+    st.success("🎉 كفو! لقد أتممت جميع المهام البيئية بنجاح وحافظت على بيئتك!")
+    
+    st.markdown("### 🏆 احصل على شارة حامي البيئة الخاصة بك:")
+    user_name = st.text_input("أدخل اسمك الكريم لعرضه على الشارة:")
+    
+    if user_name:
+        st.markdown(f"""
+            <div class="badge-card">
+                <h2>🌟 وسام حامي البيئة 🌟</h2>
+                <p>تشهد هذه الشارة بأن البطل/ـة:</p>
+                <h1 style="color: #ffeb3b; margin: 10px 0;">{user_name}</h1>
+                <p>قد أتم بنجاح تحدي النظافة البيئية وساهم في جعل العالم مكاناً أنظف وأفضل! 🌍💚</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        st.info("💡 يمكنك التقاط صورة الشاشة (Screenshot) لحفظ الشارة ومشاركتها مع أصدقائك!")
 else:
-    st.warning("👋 ابدأ التحدي الآن بالضغط على المهام التي قمت بها اليوم!")
+    st.warning("⚠️ أتمم جميع المهام أعلاه لتظهر لك شارة الإنجاز الخاصة بك!")
