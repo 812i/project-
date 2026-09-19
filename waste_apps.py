@@ -82,7 +82,7 @@ if percentage == 100:
                 <h2>🌟 ECO-HERO BADGE 🌟</h2>
                 <p>This is proudly presented to:</p>
                 <h1 style="color: #ffeb3b; margin: 10px 0;">{user_name}</h1>
-                <p>For successfully completing the Cleanliness Challenge and helping make our planet cleaner and greener! 🌍💚</p>
+                <p>For successfully completing the Cleanliness Challenge and contributing to a <b>Green Riyadh</b> and a sustainable future! 🌍💚</p>
             </div>
         """, unsafe_allow_html=True)
         
