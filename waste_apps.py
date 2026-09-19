@@ -1,92 +1,59 @@
 import streamlit as st
 
-# إعداد صفحة التطبيق
+# 1. إعدادات الصفحة لتناسب الجوال بشكل تلقائي
 st.set_page_config(
-    page_title="Trash to Art Gallery",
-    page_icon="🎨",
-    layout="centered"
+    page_title="تحدي الـ 7 أيام البيئي",
+    page_icon="🌱",
+    layout="centered" # يضمن بقاء المحتوى في المنتصف ومناسباً للشاشات الصغيرة
 )
 
-# عنوان التطبيق والبانر
-st.title("🎨 معرض الفن الرقمي للنفايات")
-st.markdown("### تحويل المهملات إلى تحف فنية بمناسبة اليوم العالمي للتنظيف")
-st.write("اختر نوعاً من النفايات الشائعة، وشاهد كيف يمكن تحويلها إلى قطعة فنية فريدة!")
+# تصميم مخصص لتحسين الخطوط والأزرار على الجوال
+st.markdown("""
+    <style>
+    .big-title { font-size: 1.8rem !important; font-weight: bold; text-align: center; color: #2E7D32; }
+    .subtitle { font-size: 1.1rem; text-align: center; color: #555; margin-bottom: 20px; }
+    div[data-testid="stCheckbox"] { padding: 8px; background-color: #f9f9f9; border-radius: 8px; margin-bottom: 8px; }
+    </style>
+""", unsafe_allow_html=True)
 
-st.markdown("---")
+# العنوان الرئيسي
+st.markdown('<p class="big-title">🌱 تحدي الـ 7 أيام البيئي</p>', unsafe_allow_html=True)
+st.markdown('<p class="subtitle">بمناسبة اليوم العالمي للنظافة - أنجز المهام يومياً لجعل كوكبنا أفضل!</p>', unsafe_allow_html=True)
 
-# 1. اختيار المستخدم
-st.subheader("🔍 اختر نوع النفايات لتحويلها:")
-waste_item = st.selectbox("ما هي القطعة التي تريد رؤيتها كفن؟", [
-    "قارورة بلاستيكية مهملة",
-    "علبة مشروبات غازية فارغة",
-    "إطار سيارة قديم",
-    "مجموعة أكياس بلاستيكية",
-    "أجهزة إلكترونية تالفة",
-    "بقايا طعام مهدرة"
-])
+# 2. قائمة المهام اليومية
+tasks = [
+    "📅 اليوم 1: استبدل الأكياس البلاستيكية بأكياس قماشية مستدامة.",
+    "📅 اليوم 2: تجنب شراء أي قوارير ماء بلاستيكية واستخدم مطرتك الخاصة.",
+    "📅 اليوم 3: افصل النفايات في منزلك (بلاستيك، ورق، بقايا طعام).",
+    "📅 اليوم 4: قلل هدر الطعام (تناول وجبة كاملة دون مخلفات).",
+    "📅 اليوم 5: اجمع 5 قطع من النفايات البلاستيكية من محيطك أو الشارع ووفرها للحاويات المخصصة.",
+    "📅 اليوم 6: أغلق الأجهزة غير المستخدمة ووفر الطاقة.",
+    "📅 اليوم 7: انشر الوعي! شارك لقطة شاشة لإنجازك مع صديق ليدخل التحدي."
+]
 
-# قاموس العروض الفنية المضمونة 100% (تستبدل الروابط بصور ومحتوى بصري مضمون)
-art_displays = {
-    "قارورة بلاستيكية مهملة": {
-        "title": "مجسم المصباح المضيء من البلاستيك",
-        "desc": "تم تحويل الزجاجات البلاستيكية إلى ثريا إضاءة حديثة وعصرية تزين المعارض الفنية.",
-        "emoji": "💡🍾",
-        "color": "#e0f7fa"
-    },
-    "علبة مشروبات غازية فارغة": {
-        "title": "لوحة الفسيفساء المعدنية",
-        "desc": "تم دمج العلب الملونة وقصها لصنع لوحة جدارية ثلاثية الأبعاد تعكس أضواء الطبيعة.",
-        "emoji": "🖼️🥫",
-        "color": "#fce4ec"
-    },
-    "إطار سيارة قديم": {
-        "title": "أصيص الحدائق المعلق",
-        "desc": "تم طلاء الإطار وإعادة تدويره ليصبح حديقة مصغرة تحتضن الزهور والنباتات العطرية.",
-        "emoji": "🌺🪴",
-        "color": "#e8f5e9"
-    },
-    "مجموعة أكياس بلاستيكية": {
-        "title": "فستان الأزياء المستدامة",
-        "desc": "تصميم أزياء راقي تم حياكته من الأكياس البلاستيكية المدمجة بطريقة الـ Avant-garde.",
-        "emoji": "👗♻️",
-        "color": "#fff3e0"
-    },
-    "أجهزة إلكترونية تالفة": {
-        "title": "منحوتة السايبربانك المعقدة",
-        "desc": "تجميع اللوحات الإلكترونية والأسلاك التالفة لتشكيل مجسم روبوت فني يجسد مستقبل التقنية.",
-        "emoji": "🤖⚡",
-        "color": "#ede7f6"
-    },
-    "بقايا طعام مهدرة": {
-        "title": "لوحة التسميد والخصوبة",
-        "desc": "التعبير الفني عن دورة الحياة وكيف يتحول التالف إلى تربة خصبة تنبت حياة جديدة.",
-        "emoji": "🌱🌍",
-        "color": "#f1f8e9"
-    }
-}
+# 3. تتبع حالة المهام
+completed_tasks = 0
 
-# 2. زر التنفيذ
-if st.button("✨ اعرض التحفة الفنية!", type="primary"):
-    with st.spinner(f"جاري تجهيز التحفة الفنية لـ {waste_item}..."):
-        
-        item_data = art_displays[waste_item]
-        
-        st.success("✅ تم إنجاز العمل الفني بنجاح!")
-        
-        # صندوق عرض فني أنيق ومضمون بدون مشاكل روابط
-        st.markdown(f"""
-        <div style="background-color: {item_data['color']}; padding: 30px; border-radius: 15px; text-align: center; border: 2px dashed #4caf50; margin-top: 20px;">
-            <h1 style="font-size: 60px; margin: 0;">{item_data['emoji']}</h1>
-            <h2 style="color: #2e7d32; margin-top: 15px;">{item_data['title']}</h2>
-            <p style="color: #333; font-size: 16px; margin-top: 10px;">{item_data['desc']}</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.balloons()
-        
-        st.markdown("---")
-        st.info("💡 **رسالة اليوم العالمي للتنظيف:** كل قطعة نفايات يمكن أن تكون بداية جديدة إذا أعدنا تدويرها وفكرنا فيها بطريقة إبداعية. شاركنا في تنظيف كوكبنا!")
+st.subheader("📋 مهامك اليومية:")
+for task in tasks:
+    # الحالات المحددة يتم حفظها تفاعلياً
+    if st.checkbox(task):
+        completed_tasks += 1
 
-# تذييل الصفحة
-st.markdown("---")
-st.markdown("<p style='text-align: center; color: gray;'>Trash-to-Art Gallery • Creative Edition • 20 Sept</p>", unsafe_allow_html=True)
+# 4. حساب النسبة المئوية للإنجاز
+total_tasks = len(tasks)
+progress_percentage = completed_tasks / total_tasks
+
+# 5. عرض شريط التقدم (Progress Bar)
+st.write("---")
+st.write(f"📊 **نسبة إنجاز التحدي:** {int(progress_percentage * 100)}%")
+st.progress(progress_percentage)
+
+# 6. مكافأة النجاح عند إتمام التحدي بالكامل
+if completed_tasks == total_tasks:
+    st.balloons() # تأثير بالونات احتفالية يظهر بشكل رائع على الجوال
+    st.success("🎉 كفو! لقد أتممت تحدي الـ 7 أيام بنجاح وساهمت في حماية بيئتك!")
+elif completed_tasks > 0:
+    st.info(f"💪 ممتاز! لقد أنجزت {completed_tasks} من أصل {total_tasks} مهام. استمر!")
+else:
+    st.warning("👋 ابدأ التحدي الآن بالضغط على المهام التي قمت بها اليوم!")
